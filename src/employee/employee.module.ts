@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { BuilderController } from './employee.controller';
-import { BuilderService } from './employee.service';
+import { EmployeeController } from './employee.controller';
+import { EmployeeService } from './employee.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Builder } from './models/employee.model';
+import { Employee } from './models/employee.model';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Builder])],
-  controllers: [BuilderController],
-  providers: [BuilderService],
+  imports: [SequelizeModule.forFeature([Employee])],
+  controllers: [EmployeeController],
+  providers: [EmployeeService],
 })
-export class BuilderModule {}
+export class EmployeeModule {}

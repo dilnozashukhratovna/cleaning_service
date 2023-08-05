@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { BuilderController } from './schedule.controller';
-import { BuilderService } from './schedule.service';
+import { ScheduleController } from './schedule.controller';
+import { ScheduleService } from './schedule.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Builder } from './models/schedule.model';
+import { Schedule } from './models/schedule.model';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Builder])],
-  controllers: [BuilderController],
-  providers: [BuilderService],
+  imports: [SequelizeModule.forFeature([Schedule])],
+  controllers: [ScheduleController],
+  providers: [ScheduleService],
 })
-export class BuilderModule {}
+export class ScheduleModule {}

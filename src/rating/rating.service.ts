@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { Builder } from './models/rating.model';
+import { Rating } from './models/rating.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateBuilderDto } from './dto/create-rating.dto';
-import { UpdateBuilderDto } from './dto/update-rating.dto';
+import { CreateRatingDto } from './dto/create-rating.dto';
+import { UpdateRatingDto } from './dto/update-rating.dto';
 
 @Injectable()
-export class BuilderService {
-  constructor(@InjectModel(Builder) private builderRepo: typeof Builder) {}
+export class RatingService {
+  constructor(@InjectModel(Rating) private ratingRepo: typeof Rating) {}
 
-  async createBuilder(createBuilderDto: CreateBuilderDto): Promise<Builder> {
-    const builder = await this.builderRepo.create(createBuilderDto);
-    return builder;
+  async createRating(createRatingDto: CreateRatingDto): Promise<Rating> {
+    const rating = await this.ratingRepo.create(createRatingDto);
+    return rating;
   }
 
-  async getAllBuilder(): Promise<Builder[]> {
-    const builders = await this.builderRepo.findAll({ include: { all: true } });
-    return builders;
+  async getAllRating(): Promise<Rating[]> {
+    const ratings = await this.ratingRepo.findAll({ include: { all: true } });
+    return ratings;
   }
 
-  async getBuilderById(id: number): Promise<Builder> {
-    const builder = await this.builderRepo.findByPk(id);
-    return builder;
+  async getRatingById(id: number): Promise<Rating> {
+    const rating = await this.ratingRepo.findByPk(id);
+    return rating;
   }
 
-  async deleteBuilderById(id: number) {
-    const builder = await this.builderRepo.destroy({ where: { id } });
-    return builder;
+  async deleteRatingById(id: number) {
+    const rating = await this.ratingRepo.destroy({ where: { id } });
+    return rating;
   }
 
-  async updateBuilder(id: number, updateBuilderDto: UpdateBuilderDto) {
-    const builder = await this.builderRepo.update(updateBuilderDto, {
+  async updateRating(id: number, updateRatingDto: UpdateRatingDto) {
+    const rating = await this.ratingRepo.update(updateRatingDto, {
       where: { id },
       returning: true,
     });
 
-    return builder[1][0].dataValues;
+    return rating[1][0].dataValues;
   }
 }

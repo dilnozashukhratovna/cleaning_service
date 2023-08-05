@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { Builder } from './models/customer.model';
+import { Customer } from './models/customer.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateBuilderDto } from './dto/create-customer.dto';
-import { UpdateBuilderDto } from './dto/update-customer.dto';
+import { CreateCustomerDto } from './dto/create-customer.dto';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
-export class BuilderService {
-  constructor(@InjectModel(Builder) private builderRepo: typeof Builder) {}
+export class CustomerService {
+  constructor(@InjectModel(Customer) private customerRepo: typeof Customer) {}
 
-  async createBuilder(createBuilderDto: CreateBuilderDto): Promise<Builder> {
-    const builder = await this.builderRepo.create(createBuilderDto);
-    return builder;
+  async createCustomer(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+    const customer = await this.customerRepo.create(createCustomerDto);
+    return customer;
   }
 
-  async getAllBuilder(): Promise<Builder[]> {
-    const builders = await this.builderRepo.findAll({ include: { all: true } });
-    return builders;
+  async getAllCustomer(): Promise<Customer[]> {
+    const customers = await this.customerRepo.findAll({ include: { all: true } });
+    return customers;
   }
 
-  async getBuilderById(id: number): Promise<Builder> {
-    const builder = await this.builderRepo.findByPk(id);
-    return builder;
+  async getCustomerById(id: number): Promise<Customer> {
+    const customer = await this.customerRepo.findByPk(id);
+    return customer;
   }
 
-  async deleteBuilderById(id: number) {
-    const builder = await this.builderRepo.destroy({ where: { id } });
-    return builder;
+  async deleteCustomerById(id: number) {
+    const customer = await this.customerRepo.destroy({ where: { id } });
+    return customer;
   }
 
-  async updateBuilder(id: number, updateBuilderDto: UpdateBuilderDto) {
-    const builder = await this.builderRepo.update(updateBuilderDto, {
+  async updateCustomer(id: number, updateCustomerDto: UpdateCustomerDto) {
+    const customer = await this.customerRepo.update(updateCustomerDto, {
       where: { id },
       returning: true,
     });
 
-    return builder[1][0].dataValues;
+    return customer[1][0].dataValues;
   }
 }

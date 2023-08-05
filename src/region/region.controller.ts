@@ -17,32 +17,32 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class RegionController {
   constructor(private readonly regionService: RegionService) {}
 
-  @ApiOperation({ summary: 'Region  yaratish' })
+  @ApiOperation({ summary: 'Create region' })
   @Post('create')
   async createRegion(@Body() createRegionDto: CreateRegionDto) {
     const region = this.regionService.createRegion(createRegionDto);
     return region;
   }
 
-  @ApiOperation({ summary: "Region'lani  ko'rish" })
+  @ApiOperation({ summary: "Get all regions" })
   @Get('all')
   async getAllRegion() {
     return this.regionService.getAllRegion();
   }
 
-  @ApiOperation({ summary: "Region'ni id bo'yicha ko'rish" })
+  @ApiOperation({ summary: "Get region by id" })
   @Get(':id')
   async getRegionById(@Param('id') id: string) {
     return this.regionService.getRegionById(+id);
   }
 
-  @ApiOperation({ summary: "Region'ni o'chirish" })
+  @ApiOperation({ summary: "Delete region" })
   @Delete(':id')
   async deleteRegionById(@Param('id') id: string) {
     return this.regionService.deleteRegionById(+id);
   }
 
-  @ApiOperation({ summary: "Region'ni yangilash" })
+  @ApiOperation({ summary: "Update region" })
   @Put(':id')
   async updateRegion(
     @Param('id') id: string,

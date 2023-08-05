@@ -7,47 +7,47 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { BuilderService } from './rating.service';
-import { CreateBuilderDto } from './dto/create-rating.dto';
-import { UpdateBuilderDto } from './dto/update-rating.dto';
+import { RatingService } from './rating.service';
+import { CreateRatingDto } from './dto/create-rating.dto';
+import { UpdateRatingDto } from './dto/update-rating.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Builder')
-@Controller('builder')
-export class BuilderController {
-  constructor(private readonly builderService: BuilderService) {}
+@ApiTags('Rating')
+@Controller('rating')
+export class RatingController {
+  constructor(private readonly ratingService: RatingService) {}
 
-  @ApiOperation({ summary: 'Builder  yaratish' })
+  @ApiOperation({ summary: 'Create rating' })
   @Post('create')
-  async createBuilder(@Body() createBuilderDto: CreateBuilderDto) {
-    const builder = this.builderService.createBuilder(createBuilderDto);
-    return builder;
+  async createRating(@Body() createRatingDto: CreateRatingDto) {
+    const rating = this.ratingService.createRating(createRatingDto);
+    return rating;
   }
 
-  @ApiOperation({ summary: "Builder'lani  ko'rish" })
+  @ApiOperation({ summary: "Get all ratings" })
   @Get('all')
-  async getAllBuilder() {
-    return this.builderService.getAllBuilder();
+  async getAllRating() {
+    return this.ratingService.getAllRating();
   }
 
-  @ApiOperation({ summary: "Builder'ni id bo'yicha ko'rish" })
+  @ApiOperation({ summary: "Get rating by id" })
   @Get(':id')
-  async getBuilderById(@Param('id') id: string) {
-    return this.builderService.getBuilderById(+id);
+  async getRatingById(@Param('id') id: string) {
+    return this.ratingService.getRatingById(+id);
   }
 
-  @ApiOperation({ summary: "Builder'ni o'chirish" })
+  @ApiOperation({ summary: "Delete rating" })
   @Delete(':id')
-  async deleteBuilderById(@Param('id') id: string) {
-    return this.builderService.deleteBuilderById(+id);
+  async deleteRatingById(@Param('id') id: string) {
+    return this.ratingService.deleteRatingById(+id);
   }
 
-  @ApiOperation({ summary: "Builder'ni yangilash" })
+  @ApiOperation({ summary: "Update rating" })
   @Put(':id')
-  async updateBuilder(
+  async updateRating(
     @Param('id') id: string,
-    @Body() updateBuilderDto: UpdateBuilderDto,
+    @Body() updateRatingDto: UpdateRatingDto,
   ) {
-    return this.builderService.updateBuilder(+id, updateBuilderDto);
+    return this.ratingService.updateRating(+id, updateRatingDto);
   }
 }

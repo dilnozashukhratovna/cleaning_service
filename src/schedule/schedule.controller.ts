@@ -7,47 +7,47 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { BuilderService } from './schedule.service';
-import { CreateBuilderDto } from './dto/create-schedule.dto';
-import { UpdateBuilderDto } from './dto/update-schedule.dto';
+import { ScheduleService } from './schedule.service';
+import { CreateScheduleDto } from './dto/create-schedule.dto';
+import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Builder')
-@Controller('builder')
-export class BuilderController {
-  constructor(private readonly builderService: BuilderService) {}
+@ApiTags('Schedule')
+@Controller('schedule')
+export class ScheduleController {
+  constructor(private readonly scheduleService: ScheduleService) {}
 
-  @ApiOperation({ summary: 'Builder  yaratish' })
+  @ApiOperation({ summary: 'Create schedule' })
   @Post('create')
-  async createBuilder(@Body() createBuilderDto: CreateBuilderDto) {
-    const builder = this.builderService.createBuilder(createBuilderDto);
-    return builder;
+  async createSchedule(@Body() createScheduleDto: CreateScheduleDto) {
+    const schedule = this.scheduleService.createSchedule(createScheduleDto);
+    return schedule;
   }
 
-  @ApiOperation({ summary: "Builder'lani  ko'rish" })
+  @ApiOperation({ summary: "Get all schedules" })
   @Get('all')
-  async getAllBuilder() {
-    return this.builderService.getAllBuilder();
+  async getAllSchedule() {
+    return this.scheduleService.getAllSchedule();
   }
 
-  @ApiOperation({ summary: "Builder'ni id bo'yicha ko'rish" })
+  @ApiOperation({ summary: "Get schedule by id" })
   @Get(':id')
-  async getBuilderById(@Param('id') id: string) {
-    return this.builderService.getBuilderById(+id);
+  async getScheduleById(@Param('id') id: string) {
+    return this.scheduleService.getScheduleById(+id);
   }
 
-  @ApiOperation({ summary: "Builder'ni o'chirish" })
+  @ApiOperation({ summary: "Delete schedule" })
   @Delete(':id')
-  async deleteBuilderById(@Param('id') id: string) {
-    return this.builderService.deleteBuilderById(+id);
+  async deleteScheduleById(@Param('id') id: string) {
+    return this.scheduleService.deleteScheduleById(+id);
   }
 
-  @ApiOperation({ summary: "Builder'ni yangilash" })
+  @ApiOperation({ summary: "Update schedule by id" })
   @Put(':id')
-  async updateBuilder(
+  async updateSchedule(
     @Param('id') id: string,
-    @Body() updateBuilderDto: UpdateBuilderDto,
+    @Body() updateScheduleDto: UpdateScheduleDto,
   ) {
-    return this.builderService.updateBuilder(+id, updateBuilderDto);
+    return this.scheduleService.updateSchedule(+id, updateScheduleDto);
   }
 }

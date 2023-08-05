@@ -1,12 +1,60 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsDate,
+  IsEmail,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  IsStrongPassword,
+} from 'class-validator';
 
-export class CreateBuilderDto {
-  @ApiProperty({ example: 'John Green', description: 'Builder full name' })
-  full_name: string;
-  @ApiProperty({ example: '2001-01-01', description: 'Builder birth date' })
-  birth_day: Date;
-  @ApiProperty({ example: 99.999, description: 'Builder salary' })
-  salary: number;
-  @ApiProperty({ example: 1, description: 'Builder company id' })
-  companyId: number;
+export class CreateCustomerDto {
+  @ApiProperty({ example: 'Anna', description: 'Customer first name' })
+  @IsNotEmpty()
+  @IsString()
+  first_name: string;
+
+  @ApiProperty({ example: 'Smith', description: 'Customer last name' })
+  @IsNotEmpty()
+  @IsString()
+  last_name: string;
+
+  @ApiProperty({ example: 'anna_01', description: 'Customer telegram link' })
+  @IsString()
+  telegram_link: string;
+
+  @ApiProperty({
+    example: 'anna@gmail.com',
+    description: 'Customer email',
+  })
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({ example: 'Pa$$w0rd', description: 'Customer password' })
+  @IsNotEmpty()
+  @IsString()
+  @IsStrongPassword()
+  password: string;
+
+  @ApiProperty({ example: 'img/photo1.jpg', description: 'Customer photo' })
+  @IsString()
+  customer_photo: string;
+
+  @ApiProperty({
+    example: '+998998887766',
+    description: 'Customer phone number',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @IsPhoneNumber()
+  phone_number: string;
+
+  @ApiProperty({ example: '2000-01-01', description: 'Customer birthdate' })
+  @IsDate()
+  birthdate: Date;
+
+  @ApiProperty({ example: 1, description: 'Customer location' })
+  @IsNotEmpty()
+  location_id: number;
 }

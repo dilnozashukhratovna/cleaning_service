@@ -7,47 +7,47 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { BuilderService } from './customer.service';
-import { CreateBuilderDto } from './dto/create-customer.dto';
-import { UpdateBuilderDto } from './dto/update-customer.dto';
+import { CustomerService } from './customer.service';
+import { CreateCustomerDto } from './dto/create-customer.dto';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Builder')
-@Controller('builder')
-export class BuilderController {
-  constructor(private readonly builderService: BuilderService) {}
+@ApiTags('Customer')
+@Controller('customer')
+export class CustomerController {
+  constructor(private readonly customerService: CustomerService) {}
 
-  @ApiOperation({ summary: 'Builder  yaratish' })
+  @ApiOperation({ summary: 'Create customer' })
   @Post('create')
-  async createBuilder(@Body() createBuilderDto: CreateBuilderDto) {
-    const builder = this.builderService.createBuilder(createBuilderDto);
-    return builder;
+  async createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
+    const customer = this.customerService.createCustomer(createCustomerDto);
+    return customer;
   }
 
-  @ApiOperation({ summary: "Builder'lani  ko'rish" })
+  @ApiOperation({ summary: "Get all customers" })
   @Get('all')
-  async getAllBuilder() {
-    return this.builderService.getAllBuilder();
+  async getAllCustomer() {
+    return this.customerService.getAllCustomer();
   }
 
-  @ApiOperation({ summary: "Builder'ni id bo'yicha ko'rish" })
+  @ApiOperation({ summary: "Get customer by id" })
   @Get(':id')
-  async getBuilderById(@Param('id') id: string) {
-    return this.builderService.getBuilderById(+id);
+  async getCustomerById(@Param('id') id: string) {
+    return this.customerService.getCustomerById(+id);
   }
 
-  @ApiOperation({ summary: "Builder'ni o'chirish" })
+  @ApiOperation({ summary: "Delete customer" })
   @Delete(':id')
-  async deleteBuilderById(@Param('id') id: string) {
-    return this.builderService.deleteBuilderById(+id);
+  async deleteCustomerById(@Param('id') id: string) {
+    return this.customerService.deleteCustomerById(+id);
   }
 
-  @ApiOperation({ summary: "Builder'ni yangilash" })
+  @ApiOperation({ summary: "Update customer" })
   @Put(':id')
-  async updateBuilder(
+  async updateCustomer(
     @Param('id') id: string,
-    @Body() updateBuilderDto: UpdateBuilderDto,
+    @Body() updateCustomerDto: UpdateCustomerDto,
   ) {
-    return this.builderService.updateBuilder(+id, updateBuilderDto);
+    return this.customerService.updateCustomer(+id, updateCustomerDto);
   }
 }

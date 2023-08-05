@@ -8,15 +8,17 @@ import {
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 
-interface RatingAttr {
+interface Employee_serviceAttr {
   employee_id: number;
-  customer_id: number;
-  rating_value: number;
-  comment: string;
+  service_type_id: number;
+  price: number;
 }
 
-@Table({ tableName: 'rating' })
-export class Rating extends Model<Rating, RatingAttr> {
+@Table({ tableName: 'employee_service' })
+export class Employee_service extends Model<
+  Employee_service,
+  Employee_serviceAttr
+> {
   @ApiProperty({ example: 1, description: 'Unikal Id' })
   @Column({
     type: DataType.INTEGER,
@@ -28,26 +30,18 @@ export class Rating extends Model<Rating, RatingAttr> {
   @ApiProperty({ example: 1, description: 'Employee id' })
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
   })
   employee_id: number;
 
-  @ApiProperty({ example: 1, description: 'Customer id' })
+  @ApiProperty({ example: 1, description: 'Service type id' })
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
   })
-  customer_id: number;
+  service_type_id: number;
 
-  @ApiProperty({ example: 4.5, description: 'Rating value' })
+  @ApiProperty({ example: 100.0, description: 'Employee service price' })
   @Column({
     type: DataType.DECIMAL,
   })
-  rating_value: number;
-
-  @ApiProperty({ example: 'Good job!', description: 'Comment for employee' })
-  @Column({
-    type: DataType.TEXT,
-  })
-  comment: string;
+  price: number;
 }

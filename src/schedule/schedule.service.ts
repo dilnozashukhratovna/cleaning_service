@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { Builder } from './models/schedule.model';
+import { Schedule } from './models/schedule.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateBuilderDto } from './dto/create-schedule.dto';
-import { UpdateBuilderDto } from './dto/update-schedule.dto';
+import { CreateScheduleDto } from './dto/create-schedule.dto';
+import { UpdateScheduleDto } from './dto/update-schedule.dto';
 
 @Injectable()
-export class BuilderService {
-  constructor(@InjectModel(Builder) private builderRepo: typeof Builder) {}
+export class ScheduleService {
+  constructor(@InjectModel(Schedule) private scheduleRepo: typeof Schedule) {}
 
-  async createBuilder(createBuilderDto: CreateBuilderDto): Promise<Builder> {
-    const builder = await this.builderRepo.create(createBuilderDto);
-    return builder;
+  async createSchedule(createScheduleDto: CreateScheduleDto): Promise<Schedule> {
+    const schedule = await this.scheduleRepo.create(createScheduleDto);
+    return schedule;
   }
 
-  async getAllBuilder(): Promise<Builder[]> {
-    const builders = await this.builderRepo.findAll({ include: { all: true } });
-    return builders;
+  async getAllSchedule(): Promise<Schedule[]> {
+    const schedules = await this.scheduleRepo.findAll({ include: { all: true } });
+    return schedules;
   }
 
-  async getBuilderById(id: number): Promise<Builder> {
-    const builder = await this.builderRepo.findByPk(id);
-    return builder;
+  async getScheduleById(id: number): Promise<Schedule> {
+    const schedule = await this.scheduleRepo.findByPk(id);
+    return schedule;
   }
 
-  async deleteBuilderById(id: number) {
-    const builder = await this.builderRepo.destroy({ where: { id } });
-    return builder;
+  async deleteScheduleById(id: number) {
+    const schedule = await this.scheduleRepo.destroy({ where: { id } });
+    return schedule;
   }
 
-  async updateBuilder(id: number, updateBuilderDto: UpdateBuilderDto) {
-    const builder = await this.builderRepo.update(updateBuilderDto, {
+  async updateSchedule(id: number, updateScheduleDto: UpdateScheduleDto) {
+    const schedule = await this.scheduleRepo.update(updateScheduleDto, {
       where: { id },
       returning: true,
     });
 
-    return builder[1][0].dataValues;
+    return schedule[1][0].dataValues;
   }
 }

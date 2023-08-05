@@ -7,17 +7,21 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { Company } from '../../company/models/company.model';
 
-interface BuilderAttr {
+interface AdminAttr {
   full_name: string;
-  birth_day: Date;
-  salary: number;
-  companyId: number;
+  telegram_link: string;
+  email: string;
+  password: string;
+  admin_photo: string;
+  is_creator: boolean;
+  is_active: boolean;
+  hashed_refresh_token: string;
+  activation_link: string;
 }
 
-@Table({ tableName: 'builder' })
-export class Builder extends Model<Builder, BuilderAttr> {
+@Table({ tableName: 'admin' })
+export class Admin extends Model<Admin, AdminAttr> {
   @ApiProperty({ example: 1, description: 'Unikal Id' })
   @Column({
     type: DataType.INTEGER,
@@ -26,34 +30,65 @@ export class Builder extends Model<Builder, BuilderAttr> {
   })
   id: number;
 
-  @ApiProperty({ example: "John Green", description: 'Builder full name' })
+  @ApiProperty({ example: 'John Green', description: 'Admin full name' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
   full_name: string;
 
-  @ApiProperty({ example: "2001-01-01", description: 'Builder birth date' })
+  @ApiProperty({ example: 'john_01', description: 'Admin telegram link' })
   @Column({
-    type: DataType.DATE,
+    type: DataType.STRING,
   })
-  birth_day: Date;
+  telegram_link: string;
 
-  @ApiProperty({ example: 99.999, description: 'Builder salary' })
+  @ApiProperty({ example: 'john01@gmail.com', description: 'Admin email' })
   @Column({
-    type: DataType.DECIMAL,
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
   })
-  salary: number;
+  email: string;
 
-  @ForeignKey(() => Company)
-  @ApiProperty({ example: 1, description: 'Builder company id' })
+  @ApiProperty({ example: 'Pa$$w0rd', description: 'Admin password' })
   @Column({
-    type: DataType.INTEGER,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
+    type: DataType.STRING,
+    allowNull: false,
   })
-  companyId: number;
+  password: string;
 
-  @BelongsTo(() => Company)
-  company: Company;
+  @ApiProperty({ example: 'img/photo1.jpg', description: 'Admin photo' })
+  @Column({
+    type: DataType.STRING,
+  })
+  admin_photo: string;
+
+  @ApiProperty({ example: 'false', description: 'Is admin creator' })
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  is_creator: boolean;
+
+  @ApiProperty({ example: 'false', description: 'Is admin active' })
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  is_active: boolean;
+
+  @ApiProperty({
+    example: 'token',
+    description: 'Admin token',
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  hashed_refresh_token: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  activation_link: string;
 }

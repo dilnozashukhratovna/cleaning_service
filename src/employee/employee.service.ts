@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { Builder } from './models/employee.model';
+import { Employee } from './models/employee.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateBuilderDto } from './dto/create-employee.dto';
-import { UpdateBuilderDto } from './dto/update-employee.dto';
+import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 @Injectable()
-export class BuilderService {
-  constructor(@InjectModel(Builder) private builderRepo: typeof Builder) {}
+export class EmployeeService {
+  constructor(@InjectModel(Employee) private employeeRepo: typeof Employee) {}
 
-  async createBuilder(createBuilderDto: CreateBuilderDto): Promise<Builder> {
-    const builder = await this.builderRepo.create(createBuilderDto);
-    return builder;
+  async createEmployee(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
+    const employee = await this.employeeRepo.create(createEmployeeDto);
+    return employee;
   }
 
-  async getAllBuilder(): Promise<Builder[]> {
-    const builders = await this.builderRepo.findAll({ include: { all: true } });
-    return builders;
+  async getAllEmployee(): Promise<Employee[]> {
+    const employees = await this.employeeRepo.findAll({ include: { all: true } });
+    return employees;
   }
 
-  async getBuilderById(id: number): Promise<Builder> {
-    const builder = await this.builderRepo.findByPk(id);
-    return builder;
+  async getEmployeeById(id: number): Promise<Employee> {
+    const employee = await this.employeeRepo.findByPk(id);
+    return employee;
   }
 
-  async deleteBuilderById(id: number) {
-    const builder = await this.builderRepo.destroy({ where: { id } });
-    return builder;
+  async deleteEmployeeById(id: number) {
+    const employee = await this.employeeRepo.destroy({ where: { id } });
+    return employee;
   }
 
-  async updateBuilder(id: number, updateBuilderDto: UpdateBuilderDto) {
-    const builder = await this.builderRepo.update(updateBuilderDto, {
+  async updateEmployee(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    const employee = await this.employeeRepo.update(updateEmployeeDto, {
       where: { id },
       returning: true,
     });
 
-    return builder[1][0].dataValues;
+    return employee[1][0].dataValues;
   }
 }

@@ -1,6 +1,6 @@
-export class UpdateBuilderDto {
-  full_name?: string;
-  birth_day?: Date;
-  salary?: number;
-  companyId?: number;
+export class UpdateRatingDto {
+  employee_id?: number;
+  customer_id?: number;
+  rating_value?: number;
+  comment?: string;
 }

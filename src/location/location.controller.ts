@@ -7,47 +7,47 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { BuilderService } from './location.service';
-import { CreateBuilderDto } from './dto/create-location.dto';
-import { UpdateBuilderDto } from './dto/update-location.dto';
+import { LocationService } from './location.service';
+import { CreateLocationDto } from './dto/create-location.dto';
+import { UpdateLocationDto } from './dto/update-location.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Builder')
-@Controller('builder')
-export class BuilderController {
-  constructor(private readonly builderService: BuilderService) {}
+@ApiTags('Location')
+@Controller('location')
+export class LocationController {
+  constructor(private readonly locationService: LocationService) {}
 
-  @ApiOperation({ summary: 'Builder  yaratish' })
+  @ApiOperation({ summary: 'Create location' })
   @Post('create')
-  async createBuilder(@Body() createBuilderDto: CreateBuilderDto) {
-    const builder = this.builderService.createBuilder(createBuilderDto);
-    return builder;
+  async createLocation(@Body() createLocationDto: CreateLocationDto) {
+    const location = this.locationService.createLocation(createLocationDto);
+    return location;
   }
 
-  @ApiOperation({ summary: "Builder'lani  ko'rish" })
+  @ApiOperation({ summary: 'Get all locations' })
   @Get('all')
-  async getAllBuilder() {
-    return this.builderService.getAllBuilder();
+  async getAllLocation() {
+    return this.locationService.getAllLocation();
   }
 
-  @ApiOperation({ summary: "Builder'ni id bo'yicha ko'rish" })
+  @ApiOperation({ summary: 'Get location by id' })
   @Get(':id')
-  async getBuilderById(@Param('id') id: string) {
-    return this.builderService.getBuilderById(+id);
+  async getLocationById(@Param('id') id: string) {
+    return this.locationService.getLocationById(+id);
   }
 
-  @ApiOperation({ summary: "Builder'ni o'chirish" })
+  @ApiOperation({ summary: 'Delete location' })
   @Delete(':id')
-  async deleteBuilderById(@Param('id') id: string) {
-    return this.builderService.deleteBuilderById(+id);
+  async deleteLocationById(@Param('id') id: string) {
+    return this.locationService.deleteLocationById(+id);
   }
 
-  @ApiOperation({ summary: "Builder'ni yangilash" })
+  @ApiOperation({ summary: 'Update location' })
   @Put(':id')
-  async updateBuilder(
+  async updateLocation(
     @Param('id') id: string,
-    @Body() updateBuilderDto: UpdateBuilderDto,
+    @Body() updateLocationDto: UpdateLocationDto,
   ) {
-    return this.builderService.updateBuilder(+id, updateBuilderDto);
+    return this.locationService.updateLocation(+id, updateLocationDto);
   }
 }

@@ -7,17 +7,25 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { Company } from '../../company/models/company.model';
 
-interface BuilderAttr {
-  full_name: string;
-  birth_day: Date;
-  salary: number;
-  companyId: number;
+interface EmployeeAttr {
+  first_name: string;
+  last_name: string;
+  telegram_link: string;
+  email: string;
+  password: string;
+  employee_photo: string;
+  phone_number: string;
+  passport_seria: string;
+  rating: number;
+  gender: string;
+  is_active: boolean;
+  hashed_refresh_token: string;
+  activation_link: string;
 }
 
-@Table({ tableName: 'builder' })
-export class Builder extends Model<Builder, BuilderAttr> {
+@Table({ tableName: 'employee' })
+export class Employee extends Model<Employee, EmployeeAttr> {
   @ApiProperty({ example: 1, description: 'Unikal Id' })
   @Column({
     type: DataType.INTEGER,
@@ -26,34 +34,109 @@ export class Builder extends Model<Builder, BuilderAttr> {
   })
   id: number;
 
-  @ApiProperty({ example: "John Green", description: 'Builder full name' })
+  @ApiProperty({ example: 'Rosie', description: 'Employee first name' })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  full_name: string;
+  first_name: string;
 
-  @ApiProperty({ example: "2001-01-01", description: 'Builder birth date' })
+  @ApiProperty({ example: 'Alison', description: 'Employee last name' })
   @Column({
-    type: DataType.DATE,
+    type: DataType.STRING,
+    allowNull: false,
   })
-  birth_day: Date;
+  last_name: string;
 
-  @ApiProperty({ example: 99.999, description: 'Builder salary' })
+  @ApiProperty({ example: 'rosie_01', description: 'Employee telegram link' })
+  @Column({
+    type: DataType.STRING,
+  })
+  telegram_link: string;
+
+  @ApiProperty({
+    example: 'rosie01@gmail.com',
+    description: 'Employee email',
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  })
+  email: string;
+
+  @ApiProperty({ example: 'Pa$$w0rd', description: 'Employee password' })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  password: string;
+
+  @ApiProperty({ example: 'img/photo1.jpg', description: 'Employee photo' })
+  @Column({
+    type: DataType.STRING,
+  })
+  employee_photo: string;
+
+  @ApiProperty({
+    example: '+998998887766',
+    description: 'Employee phone number',
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  })
+  phone_number: string;
+
+  @ApiProperty({
+    example: 'passport seria',
+    description: 'Employee passport seria',
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  })
+  passport_seria: string;
+
+  @ApiProperty({
+    example: 4.5,
+    description: 'Employee rating',
+  })
   @Column({
     type: DataType.DECIMAL,
   })
-  salary: number;
+  rating: number;
 
-  @ForeignKey(() => Company)
-  @ApiProperty({ example: 1, description: 'Builder company id' })
-  @Column({
-    type: DataType.INTEGER,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
+  @ApiProperty({
+    example: 'female',
+    description: 'Employee gender',
   })
-  companyId: number;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  gender: string;
 
-  @BelongsTo(() => Company)
-  company: Company;
+  @ApiProperty({ example: 'false', description: 'Is employee active' })
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false,
+  })
+  is_active: boolean;
+
+  @ApiProperty({
+    example: 'token',
+    description: 'Employee token',
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  hashed_refresh_token: string;
+
+  @Column({
+    type: DataType.STRING,
+  })
+  activation_link: string;
 }

@@ -17,32 +17,32 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class DistrictController {
   constructor(private readonly districtService: DistrictService) {}
 
-  @ApiOperation({ summary: 'District  yaratish' })
+  @ApiOperation({ summary: 'Create district' })
   @Post('create')
   async createDistrict(@Body() createDistrictDto: CreateDistrictDto) {
     const district = this.districtService.createDistrict(createDistrictDto);
     return district;
   }
 
-  @ApiOperation({ summary: "District'lani  ko'rish" })
+  @ApiOperation({ summary: 'Get all districts' })
   @Get('all')
   async getAllDistrict() {
     return this.districtService.getAllDistrict();
   }
 
-  @ApiOperation({ summary: "District'ni id bo'yicha ko'rish" })
+  @ApiOperation({ summary: 'Get district by id' })
   @Get(':id')
   async getDistrictById(@Param('id') id: string) {
     return this.districtService.getDistrictById(+id);
   }
 
-  @ApiOperation({ summary: "District'ni o'chirish" })
+  @ApiOperation({ summary: "Delete district" })
   @Delete(':id')
   async deleteDistrictById(@Param('id') id: string) {
     return this.districtService.deleteDistrictById(+id);
   }
 
-  @ApiOperation({ summary: "District'ni yangilash" })
+  @ApiOperation({ summary: "Update district" })
   @Put(':id')
   async updateDistrict(
     @Param('id') id: string,

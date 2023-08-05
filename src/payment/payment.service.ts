@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { Builder } from './models/payment.model';
+import { Payment } from './models/payment.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateBuilderDto } from './dto/create-payment.dto';
-import { UpdateBuilderDto } from './dto/update-payment.dto';
+import { CreatePaymentDto } from './dto/create-payment.dto';
+import { UpdatePaymentDto } from './dto/update-payment.dto';
 
 @Injectable()
-export class BuilderService {
-  constructor(@InjectModel(Builder) private builderRepo: typeof Builder) {}
+export class PaymentService {
+  constructor(@InjectModel(Payment) private paymentRepo: typeof Payment) {}
 
-  async createBuilder(createBuilderDto: CreateBuilderDto): Promise<Builder> {
-    const builder = await this.builderRepo.create(createBuilderDto);
-    return builder;
+  async createPayment(createPaymentDto: CreatePaymentDto): Promise<Payment> {
+    const payment = await this.paymentRepo.create(createPaymentDto);
+    return payment;
   }
 
-  async getAllBuilder(): Promise<Builder[]> {
-    const builders = await this.builderRepo.findAll({ include: { all: true } });
-    return builders;
+  async getAllPayment(): Promise<Payment[]> {
+    const payments = await this.paymentRepo.findAll({ include: { all: true } });
+    return payments;
   }
 
-  async getBuilderById(id: number): Promise<Builder> {
-    const builder = await this.builderRepo.findByPk(id);
-    return builder;
+  async getPaymentById(id: number): Promise<Payment> {
+    const payment = await this.paymentRepo.findByPk(id);
+    return payment;
   }
 
-  async deleteBuilderById(id: number) {
-    const builder = await this.builderRepo.destroy({ where: { id } });
-    return builder;
+  async deletePaymentById(id: number) {
+    const payment = await this.paymentRepo.destroy({ where: { id } });
+    return payment;
   }
 
-  async updateBuilder(id: number, updateBuilderDto: UpdateBuilderDto) {
-    const builder = await this.builderRepo.update(updateBuilderDto, {
+  async updatePayment(id: number, updatePaymentDto: UpdatePaymentDto) {
+    const payment = await this.paymentRepo.update(updatePaymentDto, {
       where: { id },
       returning: true,
     });
 
-    return builder[1][0].dataValues;
+    return payment[1][0].dataValues;
   }
 }

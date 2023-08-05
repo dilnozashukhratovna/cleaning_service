@@ -1,12 +1,33 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsStrongPassword,
+} from 'class-validator';
 
-export class CreateBuilderDto {
-  @ApiProperty({ example: 'John Green', description: 'Builder full name' })
+export class CreateAdminDto {
+  @ApiProperty({ example: 'John Green', description: 'Admin full name' })
+  @IsNotEmpty()
+  @IsString()
   full_name: string;
-  @ApiProperty({ example: '2001-01-01', description: 'Builder birth date' })
-  birth_day: Date;
-  @ApiProperty({ example: 99.999, description: 'Builder salary' })
-  salary: number;
-  @ApiProperty({ example: 1, description: 'Builder company id' })
-  companyId: number;
+
+  @ApiProperty({ example: 'john_01', description: 'Admin telegram link' })
+  @IsString()
+  telegram_link: string;
+
+  @ApiProperty({ example: 'john01@gmail.com', description: 'Admin email' })
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({ example: 'Pa$$w0rd', description: 'Admin password' })
+  @IsNotEmpty()
+  @IsString()
+  @IsStrongPassword()
+  password: string;
+
+  @ApiProperty({ example: 'img/photo1.jpg', description: 'Admin photo' })
+  @IsString()
+  admin_photo: string;
 }

@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { Builder } from './models/admin.model';
+import { Admin } from './models/admin.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateBuilderDto } from './dto/create-builder.dto';
-import { UpdateBuilderDto } from './dto/update-builder.dto';
+import { CreateAdminDto } from './dto/create-admin.dto';
+import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @Injectable()
-export class BuilderService {
-  constructor(@InjectModel(Builder) private builderRepo: typeof Builder) {}
+export class AdminService {
+  constructor(@InjectModel(Admin) private adminRepo: typeof Admin) {}
 
-  async createBuilder(createBuilderDto: CreateBuilderDto): Promise<Builder> {
-    const builder = await this.builderRepo.create(createBuilderDto);
-    return builder;
+  async createAdmin(createAdminDto: CreateAdminDto): Promise<Admin> {
+    const admin = await this.adminRepo.create(createAdminDto);
+    return admin;
   }
 
-  async getAllBuilder(): Promise<Builder[]> {
-    const builders = await this.builderRepo.findAll({ include: { all: true } });
-    return builders;
+  async getAllAdmin(): Promise<Admin[]> {
+    const admins = await this.adminRepo.findAll({ include: { all: true } });
+    return admins;
   }
 
-  async getBuilderById(id: number): Promise<Builder> {
-    const builder = await this.builderRepo.findByPk(id);
-    return builder;
+  async getAdminById(id: number): Promise<Admin> {
+    const admin = await this.adminRepo.findByPk(id);
+    return admin;
   }
 
-  async deleteBuilderById(id: number) {
-    const builder = await this.builderRepo.destroy({ where: { id } });
-    return builder;
+  async deleteAdminById(id: number) {
+    const admin = await this.adminRepo.destroy({ where: { id } });
+    return admin;
   }
 
-  async updateBuilder(id: number, updateBuilderDto: UpdateBuilderDto) {
-    const builder = await this.builderRepo.update(updateBuilderDto, {
+  async updateAdmin(id: number, updateAdminDto: UpdateAdminDto) {
+    const admin = await this.adminRepo.update(updateAdminDto, {
       where: { id },
       returning: true,
     });
 
-    return builder[1][0].dataValues;
+    return admin[1][0].dataValues;
   }
 }

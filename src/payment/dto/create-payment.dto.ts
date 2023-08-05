@@ -1,12 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsDecimal, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateBuilderDto {
-  @ApiProperty({ example: 'John Green', description: 'Builder full name' })
-  full_name: string;
-  @ApiProperty({ example: '2001-01-01', description: 'Builder birth date' })
-  birth_day: Date;
-  @ApiProperty({ example: 99.999, description: 'Builder salary' })
-  salary: number;
-  @ApiProperty({ example: 1, description: 'Builder company id' })
-  companyId: number;
+export class CreatePaymentDto {
+  @ApiProperty({ example: 'Cash', description: 'Payment type' })
+  @IsNotEmpty()
+  @IsString()
+  type: string;
+
+  @ApiProperty({ example: '98768686687', description: 'Customer card number' })
+  @IsString()
+  customer_card: string;
+
+  @ApiProperty({ example: 1, description: 'Schedule information' })
+  @IsNumber()
+  schedule_service_id: number;
+
+  @ApiProperty({ example: 120.0, description: 'Full price' })
+  @IsDecimal()
+  total_price: number;
 }

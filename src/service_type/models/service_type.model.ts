@@ -35,7 +35,7 @@ export class Service_type extends Model<Service_type, Service_typeAttr> {
     description: 'Service type description',
   })
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
     allowNull: false,
   })
   description: string;

@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { Builder } from './models/builder.location';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateBuilderDto } from './dto/create-location.dto';
-import { UpdateBuilderDto } from './dto/update-location.dto';
+import { CreateLocationDto } from './dto/create-location.dto';
+import { UpdateLocationDto } from './dto/update-location.dto';
+import { Location } from './models/location.model';
 
 @Injectable()
-export class BuilderService {
-  constructor(@InjectModel(Builder) private builderRepo: typeof Builder) {}
+export class LocationService {
+  constructor(@InjectModel(Location) private locationRepo: typeof Location) {}
 
-  async createBuilder(createBuilderDto: CreateBuilderDto): Promise<Builder> {
-    const builder = await this.builderRepo.create(createBuilderDto);
-    return builder;
+  async createLocation(createLocationDto: CreateLocationDto): Promise<Location> {
+    const location = await this.locationRepo.create(createLocationDto);
+    return location;
   }
 
-  async getAllBuilder(): Promise<Builder[]> {
-    const builders = await this.builderRepo.findAll({ include: { all: true } });
-    return builders;
+  async getAllLocation(): Promise<Location[]> {
+    const locations = await this.locationRepo.findAll({ include: { all: true } });
+    return locations;
   }
 
-  async getBuilderById(id: number): Promise<Builder> {
-    const builder = await this.builderRepo.findByPk(id);
-    return builder;
+  async getLocationById(id: number): Promise<Location> {
+    const location = await this.locationRepo.findByPk(id);
+    return location;
   }
 
-  async deleteBuilderById(id: number) {
-    const builder = await this.builderRepo.destroy({ where: { id } });
-    return builder;
+  async deleteLocationById(id: number) {
+    const location = await this.locationRepo.destroy({ where: { id } });
+    return location;
   }
 
-  async updateBuilder(id: number, updateBuilderDto: UpdateBuilderDto) {
-    const builder = await this.builderRepo.update(updateBuilderDto, {
+  async updateLocation(id: number, updateLocationDto: UpdateLocationDto) {
+    const location = await this.locationRepo.update(updateLocationDto, {
       where: { id },
       returning: true,
     });
 
-    return builder[1][0].dataValues;
+    return location[1][0].dataValues;
   }
 }

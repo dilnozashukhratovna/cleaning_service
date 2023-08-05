@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { BuilderController } from './rating.controller';
-import { BuilderService } from './rating.service';
+import { RatingController } from './rating.controller';
+import { RatingService } from './rating.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Builder } from './models/rating.model';
+import { Rating } from './models/rating.model';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Builder])],
-  controllers: [BuilderController],
-  providers: [BuilderService],
+  imports: [SequelizeModule.forFeature([Rating])],
+  controllers: [RatingController],
+  providers: [RatingService],
 })
-export class BuilderModule {}
+export class RatingModule {}
