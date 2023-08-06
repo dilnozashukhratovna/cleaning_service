@@ -27,6 +27,14 @@ export class CreateAdminDto {
   @IsStrongPassword()
   password: string;
 
+  @ApiProperty({
+    example: 'Pa$$w0rd',
+    description: 'Admin confirmation password',
+  })
+  @IsNotEmpty()
+  @IsString()
+  confirm_password: string;
+
   @ApiProperty({ example: 'img/photo1.jpg', description: 'Admin photo' })
   @IsString()
   admin_photo: string;

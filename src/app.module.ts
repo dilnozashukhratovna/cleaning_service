@@ -23,6 +23,7 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { AdminModule } from './admin/admin.module';
 import { CustomerModule } from './customer/customer.module';
 import { EmployeeModule } from './employee/employee.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { EmployeeModule } from './employee/employee.module';
     AdminModule,
     CustomerModule,
     EmployeeModule,
+    MailModule,
   ],
   controllers: [],
   providers: [],

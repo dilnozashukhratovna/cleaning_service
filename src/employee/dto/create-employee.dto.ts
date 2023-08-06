@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsDate,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -37,6 +36,14 @@ export class CreateEmployeeDto {
   @IsString()
   @IsStrongPassword()
   password: string;
+
+  @ApiProperty({
+    example: 'Pa$$w0rd',
+    description: 'Employee confirmation password',
+  })
+  @IsNotEmpty()
+  @IsString()
+  confirm_password: string;
 
   @ApiProperty({ example: 'img/photo1.jpg', description: 'Employee photo' })
   @IsString()

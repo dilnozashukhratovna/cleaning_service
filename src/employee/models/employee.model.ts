@@ -100,7 +100,6 @@ export class Employee extends Model<Employee, EmployeeAttr> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
   })
   passport_seria: string;
 
