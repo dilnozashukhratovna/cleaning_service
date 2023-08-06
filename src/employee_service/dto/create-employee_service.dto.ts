@@ -11,6 +11,6 @@ export class CreateEmployee_serviceDto {
   service_type_id: number;
 
   @ApiProperty({ example: 100.000, description: 'Employee service price' })
-  @IsDecimal()
+  @IsNumber()
   price: number;
 }

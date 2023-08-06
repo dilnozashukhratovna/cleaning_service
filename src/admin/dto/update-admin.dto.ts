@@ -4,7 +4,7 @@ export class UpdateAdminDto {
   email?: string;
   password?: string;
   admin_photo?: string;
-  is_creator?: string;
-  is_active?: string;
+  is_creator?: boolean;
+  is_active?: boolean;
   hashed_refresh_token?: string;
 }

@@ -7,6 +7,7 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Schedule } from '../../schedule/models/schedule.model';
 
 interface PaymentAttr {
   type: string;
@@ -28,7 +29,7 @@ export class Payment extends Model<Payment, PaymentAttr> {
   @ApiProperty({ example: 'Cash', description: 'Payment type' })
   @Column({
     type: DataType.STRING,
-    allowNull: false
+    allowNull: false,
   })
   type: string;
 
@@ -39,15 +40,21 @@ export class Payment extends Model<Payment, PaymentAttr> {
   })
   customer_card: string;
 
+  @ForeignKey(() => Schedule)
   @ApiProperty({ example: 1, description: 'Schedule information' })
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   schedule_service_id: number;
+  @BelongsTo(() => Schedule)
+  schedule: Schedule;
 
   @ApiProperty({ example: 120.0, description: 'Full price' })
   @Column({
-    type: DataType.STRING,
+    type: DataType.DECIMAL,
   })
   total_price: number;
+
 }

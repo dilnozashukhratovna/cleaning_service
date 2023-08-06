@@ -19,7 +19,7 @@ export class CreateScheduleDto {
 
   @ApiProperty({ example: '2023-01-09', description: 'Scheduled date' })
   @IsNotEmpty()
-  @IsDate()
+  @IsString()
   scheduled_date: Date;
 
   @ApiProperty({ example: '10 am', description: 'Starting time' })

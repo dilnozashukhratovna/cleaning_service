@@ -7,6 +7,8 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Employee } from '../../employee/models/employee.model';
+import { Service_type } from '../../service_type/models/service_type.model';
 
 interface Employee_serviceAttr {
   employee_id: number;
@@ -27,15 +29,21 @@ export class Employee_service extends Model<
   })
   id: number;
 
+  @ForeignKey(() => Employee)
   @ApiProperty({ example: 1, description: 'Employee id' })
   @Column({
     type: DataType.INTEGER,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   employee_id: number;
 
+  @ForeignKey(() => Service_type)
   @ApiProperty({ example: 1, description: 'Service type id' })
   @Column({
     type: DataType.INTEGER,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   service_type_id: number;
 
@@ -44,4 +52,10 @@ export class Employee_service extends Model<
     type: DataType.DECIMAL,
   })
   price: number;
+
+  @BelongsTo(() => Employee)
+  employee: Employee;
+
+  @BelongsTo(() => Service_type)
+  service_type: Service_type;
 }

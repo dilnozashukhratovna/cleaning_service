@@ -5,8 +5,12 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Employee_service } from '../../employee_service/models/employee_service.model';
+import { Rating } from '../../rating/models/rating.model';
+import { Schedule } from '../../schedule/models/schedule.model';
 
 interface EmployeeAttr {
   first_name: string;
@@ -139,4 +143,13 @@ export class Employee extends Model<Employee, EmployeeAttr> {
     type: DataType.STRING,
   })
   activation_link: string;
+
+  @HasMany(() => Employee_service)
+  employee_services: Employee_service[];
+
+  @HasMany(() => Rating)
+  ratings: Rating[];
+
+  @HasMany(() => Schedule)
+  schedules: Schedule[];
 }

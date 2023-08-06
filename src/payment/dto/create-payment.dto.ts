@@ -16,6 +16,6 @@ export class CreatePaymentDto {
   schedule_service_id: number;
 
   @ApiProperty({ example: 120.0, description: 'Full price' })
-  @IsDecimal()
+  @IsNumber()
   total_price: number;
 }

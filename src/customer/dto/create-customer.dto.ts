@@ -51,8 +51,11 @@ export class CreateCustomerDto {
   phone_number: string;
 
   @ApiProperty({ example: '2000-01-01', description: 'Customer birthdate' })
-  @IsDate()
+  @IsString()
   birthdate: Date;
+
+  @ApiProperty({ example: 'false', description: 'Is customer active' })
+  is_active: boolean;
 
   @ApiProperty({ example: 1, description: 'Customer location' })
   @IsNotEmpty()

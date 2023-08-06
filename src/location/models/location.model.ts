@@ -5,8 +5,12 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Customer } from '../../customer/models/customer.model';
+import { District } from '../../district/models/district.model';
+import { Region } from '../../region/models/region.model';
 
 interface LocationAttr {
   district_id?: number;
@@ -26,17 +30,23 @@ export class Location extends Model<Location, LocationAttr> {
   })
   id: number;
 
+  @ForeignKey(() => District)
   @ApiProperty({ example: 1, description: 'District id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   district_id: number;
 
+  @ForeignKey(() => Region)
   @ApiProperty({ example: 1, description: 'Region id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   region_id: number;
 
@@ -62,4 +72,13 @@ export class Location extends Model<Location, LocationAttr> {
     type: DataType.TEXT,
   })
   extra_info: string;
+
+  @BelongsTo(() => District)
+  district: District;
+
+  @BelongsTo(() => Region)
+  region: Region;
+
+  @HasMany(() => Customer)
+  customers: Customer[];
 }

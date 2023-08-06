@@ -13,7 +13,7 @@ export class CreateRatingDto {
   customer_id: number;
 
   @ApiProperty({ example: 4.5, description: 'Rating value' })
-  @IsDecimal()
+  @IsNumber()
   rating_value: number;
 
   @ApiProperty({ example: 'Good job!', description: 'Comment for employee' })

@@ -7,6 +7,8 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Employee } from '../../employee/models/employee.model';
+import { Customer } from '../../customer/models/customer.model';
 
 interface RatingAttr {
   employee_id: number;
@@ -25,17 +27,23 @@ export class Rating extends Model<Rating, RatingAttr> {
   })
   id: number;
 
+  @ForeignKey(() => Employee)
   @ApiProperty({ example: 1, description: 'Employee id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   employee_id: number;
 
+  @ForeignKey(() => Customer)
   @ApiProperty({ example: 1, description: 'Customer id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   customer_id: number;
 
@@ -50,4 +58,10 @@ export class Rating extends Model<Rating, RatingAttr> {
     type: DataType.TEXT,
   })
   comment: string;
+
+  @BelongsTo(() => Employee)
+  employee: Employee;
+
+  @BelongsTo(() => Customer)
+  customer: Customer;
 }

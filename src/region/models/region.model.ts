@@ -5,8 +5,10 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Location } from '../../location/models/location.model';
 
 interface RegionAttr {
   name: string;
@@ -28,4 +30,7 @@ export class Region extends Model<Region, RegionAttr> {
     allowNull: false,
   })
   name: string;
+
+  @HasMany(() => Location)
+  locations: Location[];
 }

@@ -30,4 +30,10 @@ export class CreateAdminDto {
   @ApiProperty({ example: 'img/photo1.jpg', description: 'Admin photo' })
   @IsString()
   admin_photo: string;
+
+  @ApiProperty({ example: 'false', description: 'Is admin creator' })
+  is_creator: boolean;
+
+  @ApiProperty({ example: 'false', description: 'Is admin active' })
+  is_active: boolean;
 }

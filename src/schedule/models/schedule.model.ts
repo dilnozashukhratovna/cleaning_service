@@ -5,8 +5,13 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { Payment } from '../../payment/models/payment.model';
+import { Customer } from '../../customer/models/customer.model';
+import { Employee } from '../../employee/models/employee.model';
+import { Service_type } from '../../service_type/models/service_type.model';
 
 interface ScheduleAttr {
   customer_id: number;
@@ -28,24 +33,33 @@ export class Schedule extends Model<Schedule, ScheduleAttr> {
   })
   id: number;
 
+  @ForeignKey(() => Customer)
   @ApiProperty({ example: 1, description: 'Customer id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   customer_id: number;
 
+  @ForeignKey(() => Employee)
   @ApiProperty({ example: 1, description: 'Employee id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   employee_id: number;
 
+  @ForeignKey(() => Service_type)
   @ApiProperty({ example: 1, description: 'Service type id' })
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   service_type_id: number;
 
@@ -76,4 +90,16 @@ export class Schedule extends Model<Schedule, ScheduleAttr> {
     allowNull: false,
   })
   status: string;
+
+  @BelongsTo(() => Customer)
+  customer: Customer;
+
+  @BelongsTo(() => Employee)
+  employee: Employee;
+
+  @BelongsTo(() => Service_type)
+  service_type: Service_type;
+
+  @HasMany(() => Payment)
+  payments: Payment[];
 }
