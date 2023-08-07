@@ -52,6 +52,7 @@ export class AdminService {
     return admin[1][0].dataValues;
   }
 
+
   //REGISTRATION
   async signup(createAdminDto: CreateAdminDto, res: Response) {
     const admin = await this.adminRepo.findOne({
@@ -132,6 +133,9 @@ export class AdminService {
       throw new BadRequestException('Admin is not active');
     }
     const isMatchPass = await bcrypt.compare(password, admin.password);
+    // console.log(password);
+    // console.log(admin.password);
+    
     if (!isMatchPass) {
       throw new UnauthorizedException('Admin not registered(pass)');
     }

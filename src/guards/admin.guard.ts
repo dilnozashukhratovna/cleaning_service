@@ -1,35 +1,43 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt/dist';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { BadRequestException } from '@nestjs/common/exceptions';
 import { Admin } from '../admin/models/admin.model';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
-  canActivate(context: ExecutionContext) {
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
     const authHeader = req.headers.authorization;
-    if (!authHeader) {
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       throw new UnauthorizedException('Admin unauthorized');
     }
-    const bearer = authHeader.split(' ')[0];
+
     const token = authHeader.split(' ')[1];
-    if (bearer !== 'Bearer' || !token) {
+    if (!token) {
       throw new UnauthorizedException('Admin unauthorized');
     }
-    async function verify(token: string, jwtService: JwtService) {
-      const admin: Partial<Admin> = await jwtService.verify(token, {
+
+    const admin = await this.validateToken(token);
+    if (!admin || !admin.is_active) {
+      throw new UnauthorizedException('Invalid or inactive admin');
+    }
+
+    req.admin = admin;
+
+    return true;
+  }
+
+  private async validateToken(token: string): Promise<Partial<Admin>> {
+    try {
+      return await this.jwtService.verify(token, {
         secret: process.env.ACCESS_TOKEN_KEY,
       });
-      if (!admin) {
-        throw new UnauthorizedException('Invalid token provided');
-      }
-      if (!admin.is_active) {
-        throw new BadRequestException('Admin is not active');
-      }
-      return true;
+    } catch (error) {
+      return null;
     }
-    return verify(token, this.jwtService);
   }
 }
+

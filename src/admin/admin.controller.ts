@@ -21,6 +21,7 @@ import { LoginAdminDto } from './dto/login-admin.dto';
 import { CookieGetter } from '../decorators/cookieGetter.decorator';
 import { CreatorGuard } from '../guards/creator.guard';
 import { AdminGuard } from '../guards/admin.guard';
+import { AdminSelfGuard } from '../guards/admin.self.guard';
 
 @ApiTags('Admin')
 @Controller('admin')
@@ -42,6 +43,7 @@ export class AdminController {
   }
 
   @ApiOperation({ summary: 'Get admin by id' })
+  @UseGuards(AdminSelfGuard)
   @UseGuards(AdminGuard)
   @Get(':id')
   async getAdminById(@Param('id') id: string) {
@@ -49,6 +51,7 @@ export class AdminController {
   }
 
   @ApiOperation({ summary: 'Delete admin' })
+  @UseGuards(AdminSelfGuard)
   @UseGuards(AdminGuard)
   @Delete(':id')
   async deleteAdminById(@Param('id') id: string) {
@@ -56,6 +59,7 @@ export class AdminController {
   }
 
   @ApiOperation({ summary: 'Update admin' })
+  @UseGuards(AdminSelfGuard)
   @UseGuards(AdminGuard)
   @Put(':id')
   async updateAdmin(
@@ -107,6 +111,7 @@ export class AdminController {
     return this.adminService.activate(link);
   }
 
+  @UseGuards(AdminSelfGuard)
   @UseGuards(AdminGuard)
   @Post(':id/refresh')
   refresh(
@@ -117,6 +122,3 @@ export class AdminController {
     return this.adminService.refreshToken(+id, refreshToken, res);
   }
 }
-
-
-

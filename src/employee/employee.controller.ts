@@ -21,6 +21,7 @@ import { LoginEmployeeDto } from './dto/login-employee.dto';
 import { CookieGetter } from '../decorators/cookieGetter.decorator';
 import { AdminGuard } from '../guards/admin.guard';
 import { EmployeeGuard } from '../guards/employee.guard';
+import { EmployeeSelfGuard } from '../guards/employee.self.guard';
 
 @ApiTags('Employee')
 @Controller('employee')
@@ -42,6 +43,7 @@ export class EmployeeController {
   }
 
   @ApiOperation({ summary: 'Get employee by id' })
+  @UseGuards(EmployeeSelfGuard)
   @UseGuards(EmployeeGuard)
   @Get(':id')
   async getEmployeeById(@Param('id') id: string) {
@@ -49,6 +51,7 @@ export class EmployeeController {
   }
 
   @ApiOperation({ summary: 'Delete employee' })
+  @UseGuards(EmployeeSelfGuard)
   @UseGuards(EmployeeGuard)
   @Delete(':id')
   async deleteEmployeeById(@Param('id') id: string) {
@@ -56,6 +59,7 @@ export class EmployeeController {
   }
 
   @ApiOperation({ summary: 'Update employee' })
+  @UseGuards(EmployeeSelfGuard)
   @UseGuards(EmployeeGuard)
   @Put(':id')
   async updateEmployee(
@@ -107,6 +111,7 @@ export class EmployeeController {
     return this.employeeService.activate(link);
   }
 
+  @UseGuards(EmployeeSelfGuard)
   @UseGuards(EmployeeGuard)
   @Post(':id/refresh')
   refresh(

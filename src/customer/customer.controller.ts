@@ -21,7 +21,7 @@ import { LoginCustomerDto } from './dto/login-customer.dto';
 import { CookieGetter } from '../decorators/cookieGetter.decorator';
 import { CustomerGuard } from '../guards/customer.guard';
 import { AdminGuard } from '../guards/admin.guard';
-
+import { CustomerSelfGuard } from '../guards/customer.self.guard';
 
 @ApiTags('Customer')
 @Controller('customer')
@@ -43,6 +43,7 @@ export class CustomerController {
   }
 
   @ApiOperation({ summary: 'Get customer by id' })
+  @UseGuards(CustomerSelfGuard)
   @UseGuards(CustomerGuard)
   @Get(':id')
   async getCustomerById(@Param('id') id: string) {
@@ -50,6 +51,7 @@ export class CustomerController {
   }
 
   @ApiOperation({ summary: 'Delete customer' })
+  @UseGuards(CustomerSelfGuard)
   @UseGuards(CustomerGuard)
   @Delete(':id')
   async deleteCustomerById(@Param('id') id: string) {
@@ -57,6 +59,7 @@ export class CustomerController {
   }
 
   @ApiOperation({ summary: 'Update customer' })
+  @UseGuards(CustomerSelfGuard)
   @UseGuards(CustomerGuard)
   @Put(':id')
   async updateCustomer(
@@ -108,8 +111,9 @@ export class CustomerController {
     return this.customerService.activate(link);
   }
 
-  @Post(':id/refresh')
+  @UseGuards(CustomerSelfGuard)
   @UseGuards(CustomerGuard)
+  @Post(':id/refresh')
   refresh(
     @Param('id') id: string,
     @CookieGetter('refresh_token') refreshToken: string,
