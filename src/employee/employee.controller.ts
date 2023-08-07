@@ -28,13 +28,6 @@ import { EmployeeSelfGuard } from '../guards/employee.self.guard';
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
-  @ApiOperation({ summary: 'Create employee' })
-  @Post('create')
-  async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto) {
-    const employee = this.employeeService.createEmployee(createEmployeeDto);
-    return employee;
-  }
-
   @ApiOperation({ summary: 'Get all employees' })
   @UseGuards(AdminGuard)
   @Get('all')

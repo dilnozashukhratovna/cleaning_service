@@ -23,11 +23,6 @@ export class AdminService {
     private readonly mailService: MailService,
   ) {}
 
-  async createAdmin(createAdminDto: CreateAdminDto): Promise<Admin> {
-    const admin = await this.adminRepo.create(createAdminDto);
-    return admin;
-  }
-
   async getAllAdmin(): Promise<Admin[]> {
     const admins = await this.adminRepo.findAll({ include: { all: true } });
     return admins;

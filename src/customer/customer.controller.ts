@@ -28,13 +28,6 @@ import { CustomerSelfGuard } from '../guards/customer.self.guard';
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
-  @ApiOperation({ summary: 'Create customer' })
-  @Post('create')
-  async createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
-    const customer = this.customerService.createCustomer(createCustomerDto);
-    return customer;
-  }
-
   @ApiOperation({ summary: 'Get all customers' })
   @UseGuards(AdminGuard)
   @Get('all')

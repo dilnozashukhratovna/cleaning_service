@@ -27,14 +27,7 @@ import { AdminSelfGuard } from '../guards/admin.self.guard';
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
-
-  @ApiOperation({ summary: 'Create admin' })
-  @Post('create')
-  async createAdmin(@Body() createAdminDto: CreateAdminDto) {
-    const admin = this.adminService.createAdmin(createAdminDto);
-    return admin;
-  }
-
+  
   @ApiOperation({ summary: 'Get all admins' })
   @UseGuards(CreatorGuard)
   @Get('all')

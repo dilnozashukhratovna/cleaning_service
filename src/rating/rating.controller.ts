@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { RatingService } from './rating.service';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AdminGuard } from '../guards/admin.guard';
 
 @ApiTags('Rating')
 @Controller('rating')
@@ -24,25 +26,29 @@ export class RatingController {
     return rating;
   }
 
-  @ApiOperation({ summary: "Get all ratings" })
+  @ApiOperation({ summary: 'Get all ratings' })
+  @UseGuards(AdminGuard)
   @Get('all')
   async getAllRating() {
     return this.ratingService.getAllRating();
   }
 
-  @ApiOperation({ summary: "Get rating by id" })
+  @ApiOperation({ summary: 'Get rating by id' })
+  @UseGuards(AdminGuard)
   @Get(':id')
   async getRatingById(@Param('id') id: string) {
     return this.ratingService.getRatingById(+id);
   }
 
-  @ApiOperation({ summary: "Delete rating" })
+  @ApiOperation({ summary: 'Delete rating' })
+  @UseGuards(AdminGuard)
   @Delete(':id')
   async deleteRatingById(@Param('id') id: string) {
     return this.ratingService.deleteRatingById(+id);
   }
 
-  @ApiOperation({ summary: "Update rating" })
+  @ApiOperation({ summary: 'Update rating' })
+  @UseGuards(AdminGuard)
   @Put(':id')
   async updateRating(
     @Param('id') id: string,

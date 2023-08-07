@@ -33,7 +33,6 @@ export class ScheduleService {
       where: { id },
       returning: true,
     });
-
     return schedule[1][0].dataValues;
   }
 }

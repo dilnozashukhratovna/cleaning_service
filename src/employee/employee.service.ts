@@ -18,13 +18,6 @@ export class EmployeeService {
     private readonly mailService: MailService,
   ) {}
 
-  async createEmployee(
-    createEmployeeDto: CreateEmployeeDto,
-  ): Promise<Employee> {
-    const employee = await this.employeeRepo.create(createEmployeeDto);
-    return employee;
-  }
-
   async getAllEmployee(): Promise<Employee[]> {
     const employees = await this.employeeRepo.findAll({
       include: { all: true },

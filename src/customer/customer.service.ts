@@ -21,13 +21,6 @@ export class CustomerService {
     private readonly mailService: MailService,
   ) {}
 
-  async createCustomer(
-    createCustomerDto: CreateCustomerDto,
-  ): Promise<Customer> {
-    const customer = await this.customerRepo.create(createCustomerDto);
-    return customer;
-  }
-
   async getAllCustomer(): Promise<Customer[]> {
     const customers = await this.customerRepo.findAll({
       include: { all: true },
