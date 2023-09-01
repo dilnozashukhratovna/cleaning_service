@@ -20,7 +20,7 @@ export class RegionController {
   constructor(private readonly regionService: RegionService) {}
 
   @ApiOperation({ summary: 'Create region' })
-  @UseGuards(AdminGuard)
+  // @UseGuards(AdminGuard)
   @Post('create')
   async createRegion(@Body() createRegionDto: CreateRegionDto) {
     const region = this.regionService.createRegion(createRegionDto);
@@ -28,7 +28,7 @@ export class RegionController {
   }
 
   @ApiOperation({ summary: 'Get all regions' })
-  @UseGuards(AdminGuard)
+  // @UseGuards(AdminGuard)
   @Get('all')
   async getAllRegion() {
     return this.regionService.getAllRegion();
@@ -49,7 +49,7 @@ export class RegionController {
   }
 
   @ApiOperation({ summary: 'Update region' })
-  @UseGuards(AdminGuard)
+  // @UseGuards(AdminGuard)
   @Put(':id')
   async updateRegion(
     @Param('id') id: string,

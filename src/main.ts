@@ -15,10 +15,10 @@ const start = async () => {
 
     const PORT = process.env.PORT || 3003;
     const app = await NestFactory.create(AppModule);
+    app.setGlobalPrefix('api');
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('/api/docs', app, document);
     app.use(cookieParser());
-    app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe());
 
     await app.listen(PORT, () => {

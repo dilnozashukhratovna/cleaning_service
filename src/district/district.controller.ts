@@ -20,7 +20,7 @@ export class DistrictController {
   constructor(private readonly districtService: DistrictService) {}
 
   @ApiOperation({ summary: 'Create district' })
-  @UseGuards(AdminGuard)
+  // @UseGuards(AdminGuard)
   @Post('create')
   async createDistrict(@Body() createDistrictDto: CreateDistrictDto) {
     const district = this.districtService.createDistrict(createDistrictDto);
